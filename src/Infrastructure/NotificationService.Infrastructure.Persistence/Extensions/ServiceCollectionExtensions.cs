@@ -1,8 +1,8 @@
 using Itmo.Dev.Platform.Persistence.Abstractions.Extensions;
 using Itmo.Dev.Platform.Persistence.Postgres.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using NotificationService.Application.Abstractions.Persistence;
 using NotificationService.Infrastructure.Persistence.Plugins;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace NotificationService.Infrastructure.Persistence.Extensions;
 
