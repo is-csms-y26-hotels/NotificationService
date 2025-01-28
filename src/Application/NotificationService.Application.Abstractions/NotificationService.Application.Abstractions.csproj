@@ -5,6 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="SourceKit" />
         <PackageReference Include="SourceKit.Generators.Builder"/>
     </ItemGroup>
 

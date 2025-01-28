@@ -1,6 +1,8 @@
 using Itmo.Dev.Platform.Kafka.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Notifications.Kafka.Contracts;
+using NotificationService.Presentation.Kafka.ConsumerHandlers;
 
 namespace NotificationService.Presentation.Kafka.Extensions;
 
@@ -10,28 +12,17 @@ public static class ServiceCollectionExtensions
         this IServiceCollection collection,
         IConfiguration configuration)
     {
-        // const string consumerKey = "Presentation:Kafka:Consumers";
-        // const string producerKey = "Presentation:Kafka:Producers";
+        const string consumerKey = "Presentation:Kafka:Consumers";
 
-        // TODO: add consumers and producers
-        // consumer example:
-        // .AddConsumer(b => b
-        //     .WithKey<MessageKey>()
-        //     .WithValue<MessageValue>()
-        //     .WithConfiguration(configuration.GetSection($"{consumerKey}:MessageName"))
-        //     .DeserializeKeyWithProto()
-        //     .DeserializeValueWithProto()
-        //     .HandleWith<MessageHandler>())
-        //
-        // producer example:
-        // .AddProducer(b => b
-        //     .WithKey<MessageKey>()
-        //     .WithValue<MessageValue>()
-        //     .WithConfiguration(configuration.GetSection($"{producerKey}:MessageName"))
-        //     .SerializeKeyWithProto()
-        //     .SerializeValueWithProto())
         collection.AddPlatformKafka(builder => builder
-            .ConfigureOptions(configuration.GetSection("Presentation:Kafka")));
+            .ConfigureOptions(configuration.GetSection("Presentation:Kafka"))
+            .AddConsumer(b => b
+            .WithKey<BookingNotificationKey>()
+             .WithValue<BookingNotificationValue>()
+            .WithConfiguration(configuration.GetSection($"{consumerKey}:BookingNotifications"))
+             .DeserializeKeyWithProto()
+             .DeserializeValueWithProto()
+             .HandleInboxWith<BookingNotificationHandler>()));
 
         return collection;
     }

@@ -11,7 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Itmo.Dev.Platform.MessagePersistence.Postgres" />
         <PackageReference Include="Itmo.Dev.Platform.Observability" />
+        <PackageReference Include="SourceKit" />
     </ItemGroup>
 
     <ItemGroup>

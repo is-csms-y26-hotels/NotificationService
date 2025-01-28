@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         // TODO: add services
         collection.AddScoped<ISenderService, SenderService>();
+        collection.AddScoped<ISenderHandler, SenderHandler>();
         return collection;
     }
 }
