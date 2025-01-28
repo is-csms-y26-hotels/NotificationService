@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package notifications;
+
+option csharp_namespace = "Notifications.Kafka.Contracts";
+
+import "google/protobuf/timestamp.proto";
+
+message BookingNotificationKey {
+  int64 booking_id = 1;
+}
+
+message BookingNotificationValue {
+
+  oneof event {
+    BookingCreatedNotification booking_created_notification = 1;
+    BookingUpdatedNotification booking_updated_notification = 2;
+  }
+
+  enum BookingState {
+    BOOKING_STATE_UNSPECIFIED = 0;
+    BOOKING_STATE_CREATED = 1;
+    BOOKING_STATE_SUBMITTED = 3;
+    BOOKING_STATE_CANCELLED = 4;
+    BOOKING_STATE_COMPLETED = 5;
+  }
+
+  message BookingCreatedNotification {
+    int64 booking_id = 1;
+    string user_email = 2;
+    string hotel_name = 3;
+    int64 room_physical_number = 4;
+    google.protobuf.Timestamp check_in_date = 5;
+    google.protobuf.Timestamp check_out_date = 6;
+    google.protobuf.Timestamp created_at = 7;
+  }
+
+  message BookingUpdatedNotification {
+    int64 booking_id = 1;
+    BookingState booking_state = 2;
+    string user_email = 3;
+    string hotel_name = 4;
+    int64 room_physical_number = 5;
+    google.protobuf.Timestamp check_in_date = 6;
+    google.protobuf.Timestamp check_out_date = 7;
+  }
+}
