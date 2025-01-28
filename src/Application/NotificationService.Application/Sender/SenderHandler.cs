@@ -1,5 +1,4 @@
 using NotificationService.Application.Contracts.Senders;
-using NotificationService.Application.Models.Account;
 using NotificationService.Application.Models.Booking;
 using NotificationService.Application.Models.Sender;
 
@@ -7,7 +6,7 @@ namespace NotificationService.Application.Sender;
 
 public class SenderHandler : ISenderHandler
 {
-    public Task<EmailMessage>? GetMessageForBooking(BookingMessage bookingMessage)
+    public EmailMessage? GetMessageForBooking(BookingMessage bookingMessage)
     {
         string body, subject;
 
@@ -41,11 +40,6 @@ public class SenderHandler : ISenderHandler
                 return null;
         }
 
-        return Task.FromResult(new EmailMessage(bookingMessage.Email, subject, body));
-    }
-
-    public Task<EmailMessage> GetMessageForAccount(AccountMessage accountMessage)
-    {
-        throw new NotImplementedException();
+        return new EmailMessage(bookingMessage.Email, subject, body);
     }
 }

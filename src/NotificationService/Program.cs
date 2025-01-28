@@ -1,3 +1,7 @@
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 #pragma warning disable CA1506
 
 using Itmo.Dev.Platform.Common.Extensions;
@@ -6,8 +10,7 @@ using Itmo.Dev.Platform.Observability;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NotificationService.Application.Extensions;
-
-// using NotificationService.Infrastructure.Persistence.Extensions;
+using NotificationService.Application.Models.Sender;
 using NotificationService.Presentation.Grpc.Extensions;
 using NotificationService.Presentation.Kafka.Extensions;
 
@@ -21,9 +24,10 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<JsonSerialize
 builder.Services.AddPlatform();
 builder.AddPlatformObservability();
 
+builder.Services.Configure<SenderMail>(builder.Configuration.GetSection("EmailSettings"));
+
 builder.Services.AddApplication();
 
-// builder.Services.AddInfrastructurePersistence();
 builder.Services.AddPresentationGrpc();
 builder.Services.AddPresentationKafka(builder.Configuration);
 

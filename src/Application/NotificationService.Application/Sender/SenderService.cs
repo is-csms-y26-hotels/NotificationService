@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using NotificationService.Application.Contracts.Senders;
 using NotificationService.Application.Models.Sender;
 using System.Net;
@@ -10,17 +11,22 @@ public class SenderService : ISenderService, IDisposable
     private readonly SmtpClient _smtpClient;
     private readonly MailMessage _mailMessage;
 
-    public SenderService(SenderMail senders)
+    public SenderService(IOptions<SenderMail> senderOptions)
     {
-        _smtpClient = new SmtpClient(senders.SmtpServer, senders.SmtpPort)
+        SenderMail sender = senderOptions.Value;
+
+        if (sender.Email is null)
+            throw new NullReferenceException("Sender email address is null");
+
+        _smtpClient = new SmtpClient(sender.SmtpServer, sender.SmtpPort)
         {
-            Credentials = new NetworkCredential(senders.Email, senders.Password),
+            Credentials = new NetworkCredential(sender.Email, sender.Password),
             EnableSsl = true,
         };
 
         _mailMessage = new MailMessage
         {
-            From = new MailAddress(senders.Email),
+            From = new MailAddress(sender.Email),
         };
     }
 
