@@ -10,10 +10,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="protos\"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\Application\NotificationService.Application.Contracts\NotificationService.Application.Contracts.csproj"/>
     </ItemGroup>
 
